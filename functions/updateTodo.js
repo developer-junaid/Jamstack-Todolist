@@ -3,6 +3,14 @@ const sendQuery = require("./utils/sendQuery")
 
 // Handler
 exports.handler = async event => {
+  // Check if method supported
+  if (event.httpMethod !== "PUT") {
+    return {
+      statusCode: 405,
+      body: { err: "Method not supported" },
+    }
+  }
+
   // Get Info
   const { text, _id: id } = JSON.parse(event.body)
   const variables = { text, id }
