@@ -1,7 +1,7 @@
 {
-  "name": "gatsby-starter-hello-world",
+  "name": "JAMSTACK Todo-List Application",
   "private": true,
-  "description": "A simplified bare-bones starter for Gatsby",
+  "description": "A Todo List Application",
   "version": "0.1.0",
   "license": "0BSD",
   "scripts": {
