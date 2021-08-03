@@ -16,21 +16,23 @@ const TodoInput = () => {
         return errors
       }}
       onSubmit={(values, { setSubmitting }) => {
-        console.log("values", values)
-        setSubmitting(false)
+        console.log("values", values.task)
+
+        const text = values.task
+
         // Post Data
-        // fetch(`/.netlify/functions/todo-list`, {
-        //   method: "POST",
-        //   body: JSON.stringify(values),
-        // })
-        //   .then(res => res.json())
-        //   .then(result => {
-        //     console.log("success", result)
-        //     setSubmitting(false)
-        //   })
-        //   .catch(err => {
-        //     console.log(err)
-        //   })
+        fetch(`/api/createTodo`, {
+          method: "POST",
+          body: JSON.stringify({ text }),
+        })
+          .then(res => res.json())
+          .then(result => {
+            console.log("success", result)
+            setSubmitting(false)
+          })
+          .catch(err => {
+            console.log(err)
+          })
       }}
     >
       {({

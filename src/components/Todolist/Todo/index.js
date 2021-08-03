@@ -14,7 +14,7 @@ const Todo = ({ task }) => {
                     <div className="flex items-center">
                       <div className="ml-4">
                         <div className="text-sm font-medium text-gray-900">
-                          {task}
+                          {task.text}
                         </div>
                       </div>
                     </div>
