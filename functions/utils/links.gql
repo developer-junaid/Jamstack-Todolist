@@ -1,0 +1,7 @@
+type Todo {
+  text: String!
+}
+
+type Query {
+  allTodos: [Todo!]
+}
