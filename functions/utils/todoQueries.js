@@ -18,7 +18,26 @@ const CREATE_TODO = `
     }
 `
 
+const UPDATE_TODO = `
+    mutation($id: ID!, $text:String!){
+        updateTodo(id: $id, data: {text: $text}){
+            _id
+            text
+        }
+    }
+`
+
+const DELETE_TODO = `
+mutation($id: ID!){
+    deleteTodo(id: $id){
+        _id
+    }
+}
+`
+
 module.exports = {
   GET_TODOS,
   CREATE_TODO,
+  UPDATE_TODO,
+  DELETE_TODO,
 }
