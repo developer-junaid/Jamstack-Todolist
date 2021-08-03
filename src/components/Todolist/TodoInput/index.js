@@ -17,6 +17,7 @@ const TodoInput = () => {
       }}
       onSubmit={(values, { setSubmitting }) => {
         console.log("values", values)
+        setSubmitting(false)
         // Post Data
         // fetch(`/.netlify/functions/todo-list`, {
         //   method: "POST",
