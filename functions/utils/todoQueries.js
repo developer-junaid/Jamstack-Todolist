@@ -9,6 +9,16 @@ const GET_TODOS = `
         }
     }`
 
+const CREATE_TODO = `
+    mutation($text:String!){
+        createTodo(data: {text: $text}){
+            _id
+            text
+        }
+    }
+`
+
 module.exports = {
   GET_TODOS,
+  CREATE_TODO,
 }

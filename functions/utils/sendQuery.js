@@ -19,7 +19,7 @@ module.exports = async (query, variables) => {
 
   // If errors
   if (errors) {
-    console.errors(errors)
+    console.error(errors)
     throw new Error("Something went wrong")
   }
 
