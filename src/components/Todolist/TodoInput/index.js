@@ -4,7 +4,7 @@ import React from "react"
 import { Formik } from "formik"
 
 // Component
-const TodoInput = () => {
+const TodoInput = ({ refreshTodos }) => {
   return (
     <Formik
       initialValues={{ task: "" }}
@@ -29,6 +29,7 @@ const TodoInput = () => {
           .then(result => {
             console.log("success", result)
             setSubmitting(false)
+            refreshTodos()
           })
           .catch(err => {
             console.log(err)
