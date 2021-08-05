@@ -1,9 +1,16 @@
 import React, { useState, useRef } from "react"
 
-// icons
+// Images
 import deleteIcon from "./../../../../static/garbage-can.svg"
 import editIcon from "./../../../../static/pencil.svg"
 import doneIcon from "./../../../../static/done.svg"
+
+// Icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSpinner } from "@fortawesome/free-solid-svg-icons/faSpinner"
+import { faEdit } from "@fortawesome/free-solid-svg-icons/faEdit"
+import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash"
+import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck"
 
 // Todo
 const Todo = ({ task, refreshTodos }) => {
@@ -52,16 +59,16 @@ const Todo = ({ task, refreshTodos }) => {
   const editButton = editing ? (
     <a
       onClick={updateTodo}
-      className="text-indigo-600 text-base p-1 hover:text-indigo-900 cursor-pointer"
+      className="text-blue-500 flex items-center text-base p-1 hover:text-blue-900 cursor-pointer"
     >
-      <img src={doneIcon} alt="done" className="min-w-5 h-5 inline" />
+      <FontAwesomeIcon icon={faCheck} className="align-middle text-lg" />
     </a>
   ) : (
     <a
       onClick={handleEdit}
-      className="text-indigo-600 text-base p-1 hover:text-indigo-900 cursor-pointer"
+      className="text-blue-500 flex items-center text-base p-1 hover:text-blue-900 cursor-pointer"
     >
-      <img src={editIcon} alt="edit" className="min-w-5 h-5 inline" />{" "}
+      <FontAwesomeIcon icon={faEdit} className="align-middle text-lg" />
     </a>
   )
 
@@ -92,29 +99,20 @@ const Todo = ({ task, refreshTodos }) => {
               <div className="bg-white divide-y divide-gray-200">
                 {/* Container */}
                 <div className="px-2 min-w-full py-4 flex justify-between align-center ">
-                  {/* Input */}
-                  {/* <div className="flex-row min-w-1/3 w-1/3 border-2 border-black inline-block items-center"> */}
-                  {/* <div className="ml-4 font-medium text-lg "></div> */}
-                  {/* </div> */}
                   {todoText}
                   {/* Buttons */}
                   <div className="inline-block flex justify-end items-center min-w-48 w-36 ">
                     {editButton}
                     <a
                       onClick={deleteTodo}
-                      className="text-indigo-600 p-2 hover:text-indigo-900 ml-2 cursor-pointer"
+                      className="text-blue-500 flex items-center text-base p-1 hover:text-blue-900 cursor-pointer"
                     >
-                      <img
-                        src={deleteIcon}
-                        alt="delete"
-                        className="min-w-5 h-5 inline"
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        className="align-middle ml-2 text-lg"
                       />
                     </a>
                   </div>
-
-                  {/* <div className="px-3 min-w-1/3 inline-block border-2 border-green-800 py-4  flex items-center justify-end text-right text-sm font-medium">
-                   
-                  </div> */}
                 </div>
               </div>
             </div>

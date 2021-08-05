@@ -1,7 +1,11 @@
-import React from "react"
+import React, { useState } from "react"
 
 // Formik
 import { Formik } from "formik"
+
+// Icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faSpinner } from "@fortawesome/free-solid-svg-icons/faSpinner"
 
 // Component
 const TodoInput = ({ refreshTodos }) => {
@@ -15,7 +19,7 @@ const TodoInput = ({ refreshTodos }) => {
         }
         return errors
       }}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         console.log("values", values.task)
 
         const text = values.task
@@ -29,6 +33,7 @@ const TodoInput = ({ refreshTodos }) => {
           .then(result => {
             console.log("success", result)
             setSubmitting(false)
+            resetForm({ values: "" })
             refreshTodos()
           })
           .catch(err => {
@@ -57,6 +62,7 @@ const TodoInput = ({ refreshTodos }) => {
             onChange={handleChange}
             onBlur={handleBlur}
             placeholder="Task"
+            value={values.task || ""}
           />
           {errors.message && touched.message && errors.message}
 
@@ -65,6 +71,10 @@ const TodoInput = ({ refreshTodos }) => {
             type="submit"
             disabled={isSubmitting}
           >
+            {isSubmitting && (
+              <FontAwesomeIcon className="mr-2" icon={faSpinner} spin />
+            )}
+
             {isSubmitting ? "Adding.." : "Add"}
           </button>
         </form>
