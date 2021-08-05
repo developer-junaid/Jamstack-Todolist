@@ -1,10 +1,5 @@
 import React, { useState, useRef } from "react"
 
-// Images
-import deleteIcon from "./../../../../static/garbage-can.svg"
-import editIcon from "./../../../../static/pencil.svg"
-import doneIcon from "./../../../../static/done.svg"
-
 // Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSpinner } from "@fortawesome/free-solid-svg-icons/faSpinner"
@@ -13,8 +8,11 @@ import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash"
 import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck"
 
 // Todo
-const Todo = ({ task, refreshTodos }) => {
-  const [editing, setEditing] = useState(false)
+const Todo = ({ task, refreshTodos, loading }) => {
+  const [editMode, setEditMode] = useState(false)
+  const [updating, setUpdating] = useState(false)
+
+  const [deleting, setDeleting] = useState(false)
   const [taskToUpdate, setTaskToUpdate] = useState(task)
   const inputEl = useRef(null)
 
@@ -24,18 +22,25 @@ const Todo = ({ task, refreshTodos }) => {
   }
 
   const handleEdit = () => {
-    setEditing(true)
+    setEditMode(true)
     inputEl.current.focus() // Focus the input field
+  }
+
+  const handleDelete = () => {
+    setDeleting(true)
+    deleteTodo()
   }
 
   // Functions
   const updateTodo = async () => {
     try {
+      setUpdating(true)
       await fetch("/api/updateTodo", {
         method: "PUT",
         body: JSON.stringify(taskToUpdate),
       })
-      setEditing(false)
+      setUpdating(false)
+      setEditMode(false)
     } catch (error) {
       console.error("Error occured: ", error)
     }
@@ -50,19 +55,30 @@ const Todo = ({ task, refreshTodos }) => {
         body: JSON.stringify({ id }),
       })
       refreshTodos()
+      setDeleting(false)
     } catch (error) {
       console.error("Error occured: ", error)
     }
   }
 
   // Sub Components
-  const editButton = editing ? (
-    <a
-      onClick={updateTodo}
-      className="text-blue-500 flex items-center text-base p-1 hover:text-blue-900 cursor-pointer"
-    >
-      <FontAwesomeIcon icon={faCheck} className="align-middle text-lg" />
-    </a>
+  const editButton = editMode ? (
+    updating ? (
+      <a className="text-blue-500 flex items-center text-base p-1 hover:text-blue-900 cursor-pointer">
+        <FontAwesomeIcon
+          icon={faSpinner}
+          spin
+          className="align-middle text-lg"
+        />
+      </a>
+    ) : (
+      <a
+        onClick={updateTodo}
+        className="text-blue-500 flex items-center text-base p-1 hover:text-blue-900 cursor-pointer"
+      >
+        <FontAwesomeIcon icon={faCheck} className="align-middle text-lg" />
+      </a>
+    )
   ) : (
     <a
       onClick={handleEdit}
@@ -72,7 +88,7 @@ const Todo = ({ task, refreshTodos }) => {
     </a>
   )
 
-  const todoText = editing ? (
+  const todoText = editMode ? (
     <input
       className="text-sm text w-full px-2 ml-2 font-medium  focus:ring focus:border-blue-300 overflow-scroll  font-medium outline-none text-gray-900"
       value={taskToUpdate.text}
@@ -89,6 +105,24 @@ const Todo = ({ task, refreshTodos }) => {
     />
   )
 
+  // Delete Button
+  const deleteButton = deleting ? (
+    <a className="text-blue-500 flex items-center text-base p-1 hover:text-blue-900 cursor-pointer">
+      <FontAwesomeIcon
+        icon={faSpinner}
+        spin
+        className="align-middle ml-2 text-lg"
+      />
+    </a>
+  ) : (
+    <a
+      onClick={handleDelete}
+      className="text-blue-500 flex items-center text-base p-1 hover:text-blue-900 cursor-pointer"
+    >
+      <FontAwesomeIcon icon={faTrash} className="align-middle ml-2 text-lg" />
+    </a>
+  )
+
   // Return
   return (
     <div className="flex flex-col">
@@ -103,15 +137,7 @@ const Todo = ({ task, refreshTodos }) => {
                   {/* Buttons */}
                   <div className="inline-block flex justify-end items-center min-w-48 w-36 ">
                     {editButton}
-                    <a
-                      onClick={deleteTodo}
-                      className="text-blue-500 flex items-center text-base p-1 hover:text-blue-900 cursor-pointer"
-                    >
-                      <FontAwesomeIcon
-                        icon={faTrash}
-                        className="align-middle ml-2 text-lg"
-                      />
-                    </a>
+                    {deleteButton}
                   </div>
                 </div>
               </div>

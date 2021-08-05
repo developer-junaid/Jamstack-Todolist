@@ -6,7 +6,6 @@ exports.handler = async event => {
   // Get Info
   const { text } = JSON.parse(event.body)
   const variables = { text }
-  console.log("text", text)
 
   // Try
 
