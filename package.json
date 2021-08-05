@@ -1,7 +1,7 @@
 {
-  "name": "JAMSTACK Todo-List Application",
+  "name": "jamstack-todo-list",
   "private": true,
-  "description": "A Todo List Application",
+  "description": "this is a jamstack todo list application",
   "version": "0.1.0",
   "license": "0BSD",
   "scripts": {
