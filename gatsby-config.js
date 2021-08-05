@@ -6,5 +6,9 @@
 
 module.exports = {
   /* Your site config here */
-  plugins: ["gatsby-plugin-postcss", "gatsby-plugin-fontawesome-css"],
+  plugins: [
+    "gatsby-plugin-postcss",
+    "gatsby-plugin-fontawesome-css",
+    `gatsby-plugin-react-helmet`,
+  ],
 }

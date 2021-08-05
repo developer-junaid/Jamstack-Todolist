@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react"
+import { Helmet } from "react-helmet"
 
 // Components
 import Todo from "./Todo"
 import TodoInput from "./TodoInput"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faSpinner } from "@fortawesome/free-solid-svg-icons/faSpinner"
+import titleIcon from "./../../../static/to-do-list.png"
 
 // Todo List
 const Todolist = () => {
@@ -15,7 +17,7 @@ const Todolist = () => {
   const loadTodos = async () => {
     try {
       setLoading(true)
-      const res = await fetch("/api/getTodos")
+      const res = await fetch("/.netlify/functions/getTodos")
       const todos = await res.json() // Get todos
       setTodos(todos)
       setLoading(false)
@@ -31,6 +33,12 @@ const Todolist = () => {
   // Return
   return (
     <div className="container mx-auto px-4 font-sans text-white tracking-wide min-h-screen bg-blue-50 text-blue-500">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Todo List</title>
+        <link rel="icon" href={titleIcon} />
+        <link rel="canonical" href="#" />
+      </Helmet>
       <h1 className="text-4xl text-center mt-10 font-semibold">Todo List</h1>
       <TodoInput refreshTodos={loadTodos} />
       {!loading ? (
